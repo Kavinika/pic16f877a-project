@@ -7,7 +7,7 @@
 
 #pragma config WDTE = OFF        // Watchdog Timer Enable bit (WDT disabled)
 
-//test patch`
+//test patch
 static void init_config(void) {
     init_uart(9600);
     
