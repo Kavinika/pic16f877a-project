@@ -1,0 +1,9 @@
+# MPLAB build output
+build/
+dist/
+debug/
+nbproject/private/
+
+# macOS metadata
+.DS_Store
+
