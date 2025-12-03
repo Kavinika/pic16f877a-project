@@ -26,13 +26,15 @@ jobs:
         run: echo "/opt/microchip/xc8/v3.10/bin" >> $GITHUB_PATH
 
       - name: Build Firmware
-        working-directory: Driver-Polling.X
         run: |
          MP_CC=xc8 make clean
          MP_CC=xc8 make all
+
+      - name: List dist folder
+        run: ls -R dist || true
 
       - name: Upload HEX Artifact
         uses: actions/upload-artifact@v4
         with:
           name: pic-uart-firmware
-          path: Driver-Polling.X/dist/*.hex
+          path: dist/**/production/*.hex
