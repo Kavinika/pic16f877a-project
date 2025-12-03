@@ -25,10 +25,17 @@ jobs:
       - name: Add XC8 to PATH
         run: echo "/opt/microchip/xc8/v3.10/bin" >> $GITHUB_PATH
 
+      - name: Check XC8 tools
+        run: |
+          which xc8
+          which xc8-cc
+          which xc8-as
+          xc8 --version
+
       - name: Build Firmware
         run: |
-         MP_CC=xc8 make clean
-         MP_CC=xc8 make all
+         make clean MP_CC=xc8-cc MP_AS=xc8-as
+         make all   MP_CC=xc8-cc MP_AS=xc8-as
 
       - name: List dist folder
         run: ls -R dist || true
