@@ -35,10 +35,14 @@ jobs:
           which xc8-as || true
           xc8-cc --version || true
 
+      - name: List available DFPs
+        run: |
+          ls /opt/microchip/xc8/v3.10 || true
+
       - name: Build Firmware
         run: |
-         make clean MP_CC=xc8-cc MP_AS=xc8-as
-         make all   MP_CC=xc8-cc MP_AS=xc8-as
+         make clean MP_CC=xc8-cc MP_AS=pic-as MP_EXTRA="-mdfp=/opt/microchip/xc8/v3.10/packs/"
+         make all   MP_CC=xc8-cc MP_AS=pic-as MP_EXTRA="-mdfp=/opt/microchip/xc8/v3.10/packs/"
 
       - name: List dist folder
         run: ls -R dist || true
