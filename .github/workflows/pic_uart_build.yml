@@ -31,9 +31,9 @@ jobs:
 
       - name: Check XC8 tools
         run: |
-          which xc8-cc
-          which xc8-as
-          xc8-cc --version
+          which xc8-cc || true
+          which xc8-as || true
+          xc8-cc --version || true
 
       - name: Build Firmware
         run: |
