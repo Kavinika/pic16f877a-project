@@ -48,8 +48,8 @@ jobs:
 
       - name: Build Firmware
         run: |
-         make clean MP_CC=xc8-cc DFP_DIR=$HOME/.mchp_packs/PIC16Fxxx_DFP MP_AS=pic-as
-         make all   MP_CC=xc8-cc DFP_DIR=$HOME/.mchp_packs/PIC16Fxxx_DFP MP_AS=pic-as
+         make clean FIXDEPS=echo MP_CC=xc8-cc DFP_DIR=$HOME/.mchp_packs/PIC16Fxxx_DFP MP_AS=pic-as
+         make all   FIXDEPS=echo MP_CC=xc8-cc DFP_DIR=$HOME/.mchp_packs/PIC16Fxxx_DFP MP_AS=pic-as
 
       - name: List dist folder
         run: ls -R dist || true
