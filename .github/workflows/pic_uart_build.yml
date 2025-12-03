@@ -39,10 +39,17 @@ jobs:
         run: |
           ls /opt/microchip/xc8/v3.10 || true
 
+      - name: Install PIC16 DFP Pack
+        run: |
+          mkdir -p $HOME/.mchp_packs
+          cd $HOME/.mchp_packs
+          wget https://packs.download.microchip.com/Microchip.PIC16Fxxx_DFP.1.2.33.atpack -O pack.atpack
+          unzip -o pack.atpack -d PIC16Fxxx_DFP
+
       - name: Build Firmware
         run: |
-         make clean MP_CC=xc8-cc DFP_DIR=/opt/microchip/xc8/v3.10/pic MP_AS=pic-as
-         make all   MP_CC=xc8-cc DFP_DIR=/opt/microchip/xc8/v3.10/pic MP_AS=pic-as
+         make clean MP_CC=xc8-cc DFP_DIR=$HOME/.mchp_packs/PIC16Fxxx_DFP/xc8 MP_AS=pic-as
+         make all   MP_CC=xc8-cc DFP_DIR=$HOME/.mchp_packs/PIC16Fxxx_DFP/xc8 MP_AS=pic-as
 
       - name: List dist folder
         run: ls -R dist || true
