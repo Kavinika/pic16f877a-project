@@ -1,0 +1,38 @@
+name: PIC UART Polling Firmware Build
+
+on:
+  push:         # run on every git push
+    branches: [ "main" ]
+  pull_request: # run when PR is opened
+    branches: [ "main" ]
+  workflow_dispatch:    # run manually with a button
+
+jobs:
+  build:
+    name: Build PIC Firmware (XC8)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Install XC8 Compiler
+        run: |
+          wget https://ww1.microchip.com/downloads/en/DeviceDoc/xc8-v2.46-full-install-linux64-installer.run -O xc8.run
+          chmod +x xc8.run
+          sudo ./xc8.run --mode unattended --unattendedmodeui none
+
+      - name: Add XC8 to PATH
+        run: echo "/opt/microchip/xc8/v2.46/bin" >> $GITHUB_PATH
+
+      - name: Build Firmware
+        working-directory: Driver-Polling.X
+        run: |
+         MP_CC=xc8 make clean
+         MP_CC=xc8 make all
+
+      - name: Upload HEX Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pic-uart-firmware
+          path: Driver-Polling.X/dist/*.hex
